@@ -1,9 +1,6 @@
-using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using SpecFlowTestingProject.Methods;
 using SpecFlowTestingProject.Pages;
-using System;
-using TechTalk.SpecFlow;
 
 namespace SpecFlowTestingProject.StepDefinitions
 {
@@ -46,9 +43,19 @@ namespace SpecFlowTestingProject.StepDefinitions
                         _homePage.SelectGender(value);
                         break;
                     case "Email Address":
+                        // Check if the email value should be randomly generated
+                        if (string.IsNullOrEmpty(value))
+                        {
+                            value = Randomer.GenerateRandomEmail();
+                        }
                         _homePage.EnterEmail(value);
                         break;
                     case "Username":
+                        // Check if the email value should be randomly generated
+                        if (string.IsNullOrEmpty(value))
+                        {
+                            value = Randomer.GenerateRandomEmail();
+                        }
                         _homePage.EnterUsername(value);
                         break;
                     case "Known As":

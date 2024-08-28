@@ -112,10 +112,10 @@ namespace SpecFlowTestingProject.Features
                             "Male"});
                 table1.AddRow(new string[] {
                             "Email Address",
-                            "john.doe@example.com"});
+                            ""});
                 table1.AddRow(new string[] {
                             "Username",
-                            "johndoe"});
+                            ""});
                 table1.AddRow(new string[] {
                             "Known As",
                             "John"});
