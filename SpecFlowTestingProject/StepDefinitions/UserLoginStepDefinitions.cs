@@ -11,7 +11,7 @@ namespace SpecFlowTestingProject.StepDefinitions
     {
 
         String WebUrls = "https://hotrave.herokuapp.com/";
-        //String WebUrlsM = "https://hotrave.herokuapp.com/members";
+        
         private readonly IWebDriver _driver;
         private readonly HomePage _homePage;
         private readonly UserLoginPage _userLoginPage;
@@ -41,12 +41,12 @@ namespace SpecFlowTestingProject.StepDefinitions
                 {
 
                     case "Username":
-                   
-                        _userLoginPage.validUsername(value);
+
+                        _userLoginPage.EnterUsername(value);
                         break;
 
                     case "Password":
-                        _userLoginPage.validPassword(value);
+                        _userLoginPage.EnterPassword(value);
                         break;
 
                     default:
@@ -61,7 +61,7 @@ namespace SpecFlowTestingProject.StepDefinitions
     [When(@"I click on the ""([^""]*)"" button")]
         public void WhenIClickOnTheButton(string login)
         {
-            _userLoginPage.loginButton();
+            _userLoginPage.ClickLoginButton();
         }
 
         [Then(@"I should be redirected to the homepage")]

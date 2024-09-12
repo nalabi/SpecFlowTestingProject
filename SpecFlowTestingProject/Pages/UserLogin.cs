@@ -1,50 +1,38 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SpecFlowTestingProject.Pages
 {
-    public class UserLoginPage
+    public class UserLoginPage : BasePage
     {
-        protected IWebDriver Driver { get; }
-        public UserLoginPage(IWebDriver driver)
+
+        public UserLoginPage(IWebDriver driver) : base(driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
 
-        [FindsBy(How = How.XPath, Using = "//input[contains(@name,'username')]")]
-        //input[contains(@name,'username')]
-        public IWebElement txtUsername { get; set; }
+        private readonly By txtUsername = By.XPath("//input[contains(@name,'username')]");
+        private readonly By txtPassword = By.XPath("//input[@name='password']");
+        private readonly By btnLogin = By.XPath("//button[@type='submit'][contains(.,'Login')]");
 
-        [FindsBy(How = How.XPath, Using = "//input[@name='password']")]
-        public IWebElement txtPassword { get; set; }
-
-
-        [FindsBy(How = How.XPath, Using = "//button[@type='submit'][contains(.,'Login')]")]
-        public IWebElement btnLogin{ get; set; }
-        public void validUsername(string username)
+      
+        public void EnterUsername(string username)
         {
-          
-            txtUsername.SendKeys(username);
+            Driver.FindElement(txtUsername).SendKeys(username);
         }
 
-        public void validPassword(string password)
+        public void EnterPassword(string password)
         {
-           
-            txtPassword.SendKeys(password);
+            Driver.FindElement(txtPassword).SendKeys(password);
         }
 
-        public void loginButton()
+        public void ClickLoginButton()
         {
-            btnLogin.Submit();
+            Driver.FindElement(btnLogin).Click();
         }
 
-       
+
+
     }
-    
+
 }
