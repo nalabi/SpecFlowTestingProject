@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 
+
 public abstract class BasePage
 {
     protected IWebDriver Driver { get; }
@@ -34,18 +35,26 @@ public abstract class BasePage
         Find(by).Click();
     }
 
-    // Common method for entering text
-    protected void EnterText(By by, string text)
+    public void EnterText(By locator, string text)
     {
-        Find(by).SendKeys(text);
+        IWebElement element = Driver.FindElement(locator);
+        element.Clear();  // Clear any pre-filled text (optional)
+        element.SendKeys(text);
     }
 
 
-    protected void WaitForElement(By by, int timeoutInSeconds)
+protected void WaitForElement(By by, int timeoutInSeconds)
     {
-        //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-        //wait.Until(SeleniumExtras.PageObjects.Wa)
-        //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(by));
+        WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
+    
+        wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(by));
+    }
+
+    public void SubmitForm(By submitButtonLocator)
+    {
+        IWebElement submitButton = Driver.FindElement(submitButtonLocator);
+        submitButton.Click();
     }
 }
 
+ 

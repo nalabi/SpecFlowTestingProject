@@ -4,98 +4,88 @@ using SeleniumExtras.PageObjects;
 
 namespace SpecFlowTestingProject.Pages
 {
-    public class HomePage
+    public class HomePage : BasePage
     {
-
-        protected IWebDriver Driver { get; }
-        public HomePage(IWebDriver driver) {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
+        public HomePage(IWebDriver driver) : base(driver)
+        {
         }
 
-        [FindsBy(How = How.XPath, Using = "//button[@class='btn btn-primary btn-lg mr-2'][contains(.,'Register')]")]
+        protected IWebDriver Driver { get; }
 
-
-        public IWebElement btnRegister { get; set;}
-        [FindsBy(How = How.XPath, Using = "//input[@value='male']")]
-        private IWebElement GenderDropdown { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'Email Address')]")]
-        private IWebElement EmailField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "(//input[contains(@type,'text')])[3]")]
-        private IWebElement UsernameField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'Known As')]")]
-        private IWebElement KnownAsField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'Date Of Birth')]")]
-        private IWebElement DateOfBirthField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'City')]")]
-        private IWebElement CityDropdown { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'Country')]")]
-        private IWebElement CountryDropdown { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "(//input[contains(@type,'password')])[2]")]
-        private IWebElement PasswordField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//input[contains(@placeholder,'Confirm Password')]")]
-        private IWebElement ConfirmPasswordField { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//button[@type='submit'][contains(.,'Register')]")]
-        private IWebElement SubmitButton { get; set; }
-
+        private By btnRegister = By.XPath("//button[@class='btn btn-primary btn-lg mr-2'][contains(.,'Register')]");
+        private By GenderDropdown = By.XPath("//input[@value='male']");
+        private By GenderDropdownF = By.XPath("//input[@value='female']");
+        private By EmailField = By.XPath("//input[contains(@placeholder,'Email Address')]");
+        private By UsernameField = By.XPath("(//input[contains(@type,'text')])[3]");
+        private By KnownAsField = By.XPath("//input[contains(@placeholder,'Known As')]");
+        private By DateOfBirthField = By.XPath("//input[contains(@placeholder,'Date Of Birth')]");
+        private By CityDropdown = By.XPath("//input[contains(@placeholder,'City')]");
+        private By CountryText = By.XPath("//input[contains(@placeholder,'Country')]");
+        private By PasswordField = By.XPath("(//input[contains(@type,'password')])[2]");
+        private By ConfirmPasswordField = By.XPath("//input[contains(@placeholder,'Confirm Password')]");
+        private By SubmitBtn = By.XPath("//button[@type='submit'][contains(.,'Register')]");
+                
         public void SelectGender(string gender)
         {
-            GenderDropdown.Click();
+            By GenderLocator;
+            if (gender.ToLower() == "male")
+            {
+                GenderLocator = GenderDropdown;
+            }
+            else if (gender.ToLower() == "female")
+            {
+                GenderLocator = GenderDropdownF;           }
+            else
+            {
+                throw new ArgumentException("Invalid gender selection");
+            }
+
         }
 
         public void EnterEmail(string email)
         {
-            EmailField.SendKeys(email);
+            EnterText(EmailField, email);
         }
 
         public void EnterUsername(string username)
         {
-            UsernameField.SendKeys(username);
+            EnterText(UsernameField, username);
         }
 
         public void EnterKnownAs(string knownAs)
         {
-            KnownAsField.SendKeys(knownAs);
+            EnterText(KnownAsField, knownAs);   
         }
 
         public void EnterDateOfBirth(string dob)
         {
-            DateOfBirthField.SendKeys(dob);
+            EnterText(DateOfBirthField, dob);
         }
 
         public void SelectCity(string city)
         {
-            CityDropdown.SendKeys(city);
+            EnterText(CityDropdown, city);
            
         }
 
         public void SelectCountry(string country)
         {
-            CountryDropdown.SendKeys(country);
+            EnterText(CountryText, country);
         }
 
         public void EnterPassword(string password)
         {
-            PasswordField.SendKeys(password);
+            EnterText(PasswordField, password);
         }
 
         public void EnterConfirmPassword(string confirmPassword)
         {
-            ConfirmPasswordField.SendKeys(confirmPassword);
+            EnterText(ConfirmPasswordField, confirmPassword);
         }
 
         public void Submit()
         {
-            SubmitButton.Click();
+            SubmitForm(SubmitBtn);
         }
 
         public void MembersPage()
@@ -103,6 +93,10 @@ namespace SpecFlowTestingProject.Pages
             string MembersPage = "https://hotrave.herokuapp.com/members";
         }
 
+        public void RegisterBtn()
+        {
+            SubmitForm(btnRegister);
+        }
      
     }
 }

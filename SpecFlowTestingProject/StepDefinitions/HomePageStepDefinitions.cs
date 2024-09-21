@@ -26,7 +26,7 @@ namespace SpecFlowTestingProject.StepDefinitions
         public void GivenIAmOnTheSignUpPage()
         {
             _driver.Navigate().GoToUrl(WebUrls);
-            _homePage.btnRegister.Click();
+            _homePage.RegisterBtn();
         }
 
         [When(@"I enter the following details:")]
@@ -43,15 +43,14 @@ namespace SpecFlowTestingProject.StepDefinitions
                         _homePage.SelectGender(value);
                         break;
                     case "Email Address":
-                        // Check if the email value should be randomly generated
-                        if (string.IsNullOrEmpty(value))
+                                               if (string.IsNullOrEmpty(value))
                         {
                             value = Randomer.GenerateRandomEmail();
                         }
                         _homePage.EnterEmail(value);
                         break;
                     case "Username":
-                        // Check if the email value should be randomly generated
+                        
                         if (string.IsNullOrEmpty(value))
                         {
                             value = Randomer.GenerateRandomEmail();
