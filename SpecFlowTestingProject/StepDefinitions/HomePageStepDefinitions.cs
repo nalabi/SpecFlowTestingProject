@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using SpecFlowTestingProject.Config;
 using SpecFlowTestingProject.Methods;
 using SpecFlowTestingProject.Pages;
 
@@ -7,8 +8,8 @@ namespace SpecFlowTestingProject.StepDefinitions
     [Binding]
     public class HomePageStepDefinitions
     {
-        String WebUrls = "https://hotrave.herokuapp.com/";
-        private readonly IWebDriver _driver;
+       string WebUrls = EnvironmentVariables.Url;
+       private readonly IWebDriver _driver;
        private readonly HomePage _homePage;
 
         public HomePageStepDefinitions(ScenarioContext scenarioContext)

@@ -31,8 +31,6 @@ namespace SpecFlowTestingProject.Pages
             Driver.FindElement(btnLogin).Click();
         }
 
-
-
     }
 
 }

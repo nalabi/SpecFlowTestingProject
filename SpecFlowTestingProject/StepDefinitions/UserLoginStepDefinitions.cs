@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using SpecFlowTestingProject.Config;
 using SpecFlowTestingProject.Methods;
 using SpecFlowTestingProject.Pages;
 using System;
@@ -10,8 +11,8 @@ namespace SpecFlowTestingProject.StepDefinitions
     public class UserLoginStepDefinitions
     {
 
-        String WebUrls = "https://hotrave.herokuapp.com/";
         
+        string WebUrls = EnvironmentVariables.Url;
         private readonly IWebDriver _driver;
         private readonly HomePage _homePage;
         private readonly UserLoginPage _userLoginPage;
