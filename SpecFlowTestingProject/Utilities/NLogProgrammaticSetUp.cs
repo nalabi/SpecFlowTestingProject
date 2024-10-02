@@ -13,42 +13,40 @@ namespace SpecFlowTestingProject.Utilities
     {
         public static void Setup()
         {
-            
             var config = new LoggingConfiguration();
 
-            
-            string logDirectory = @"C:\Logs";
+            // Ensure log directory exists
+            string logDirectory = @"C:\Logs\MyApp";
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
             }
-            if (!Directory.Exists(logDirectory))
+
+            // Configure file target for logging
+            var fileTarget = new FileTarget("logfile")
             {
-                
-                var fileTarget = new FileTarget("logfile")
-                {
-                    FileName = Path.Combine(logDirectory, "logfile-${shortdate}.txt"),
-                    Layout = "${longdate} | ${uppercase:${level}} | ${message} | ID: ${mdc:item=id} | Tags: ${mdc:item=tags} | Start Time: ${date:format=MM/dd/yyyy hh:mm:ss tt}",
-                    KeepFileOpen = false  
-                };
+                FileName = Path.Combine(logDirectory, "logfile-${shortdate}.log"),
+                Layout = "${longdate} | ${uppercase:${level}} | ${message} | ${exception:format=ToString,StackTrace}",
+                KeepFileOpen = false  // Prevents file locks
+               
+            };
 
-                // Setup a console target to output logs to the console
-                var consoleTarget = new ConsoleTarget("console")
-                {
-                    Layout = "${longdate} | ${uppercase:${level}} | ${message} | ID: ${mdc:item=id} | Tags: ${mdc:item=tags} | Start Time: ${date:format=MM/dd/yyyy hh:mm:ss tt}"
-                };
+            // Configure console target for logging to the console
+            var consoleTarget = new ConsoleTarget("console")
+            {
+                Layout = "${longdate} | ${uppercase:${level}} | ${message}"
+            };
 
-                // Add the targets to the configuration
-                config.AddTarget(fileTarget);
-                config.AddTarget(consoleTarget);
+            // Add the targets to the configuration
+            config.AddTarget(fileTarget);
+            config.AddTarget(consoleTarget);
 
-                // Define rules to log messages of level Info or higher to both the file and the console
-                config.AddRule(LogLevel.Info, LogLevel.Fatal, fileTarget);  // Log to file from Info level to Fatal
-                config.AddRule(LogLevel.Info, LogLevel.Fatal, consoleTarget);  // Log to console from Info level to Fatal
+            // Define logging rules (Info level and above)
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, fileTarget);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, consoleTarget);
 
-                // Apply the configuration to NLog
-                LogManager.Configuration = config;
-            }
+            // Apply the configuration
+            LogManager.Configuration = config;
         }
     }
 }
